@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Index</title>
+        <style type="text/css"></style>
+    </head>
+
+    <body>
+        <div>
+            <input id="file" type="file" />
+            <button id="upload" type="button">upload</button>
+        </div>
+        <script type="text/javascript">
+            let button = document.getElementById('upload');
+            button.addEventListener('click', (event) => {
+                let fileObj = document.getElementById('file').files[0];
+                if (fileObj) {
+                    // let url = 'http://192.168.10.111:8088/u-file/upload';
+                    let url = 'https://glmstest.gtmc.com.cn:1443/common/upload/file';
+                    let formData = new FormData();
+                    formData.append('file', fileObj);
+                    formData.append('password', 'gztx-yex360');
+
+                    let xhr = new XMLHttpRequest();
+
+                    xhr.onload = function() {
+                        console.log('ok');
+                        console.log(JSON.parse(xhr.responseText));
+                        alert('上传成功');
+                    };
+                    xhr.onerror = function() {
+                        console.log('fail');
+                    };
+                    xhr.open('post', url, true);
+                    xhr.send(formData);
+                } else {
+                    console.log('请选择文件');
+                }
+            });
+        </script>
+    </body>
+</html>
